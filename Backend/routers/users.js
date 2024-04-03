@@ -6,6 +6,15 @@ const Comment = require("../models/comment");
 const bcrypt = require("bcrypt");
 const verifyToken = require("../verifyToken");
 
+router.get("/",  async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 router.put("/:id", verifyToken, async (req, res) => {
   try {
     if (req.body.password) {
