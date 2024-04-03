@@ -12,6 +12,7 @@ const authRouter = require("./routers/auth");
 const userRouter = require("./routers/users");
 const taskRouter = require("./routers/task");
 const ProjectRouter = require("./routers/project");
+const ListRouter = require("./routers/list");
 const commentRouter = require("./routers/comment");
 require("dotenv").config();
 
@@ -41,6 +42,7 @@ app.use(morgan("tiny"));
 app.use(`${api}/auth`, authRouter);
 app.use(`${api}/users`, userRouter);
 app.use(`${api}/projects`, ProjectRouter);
+app.use(`${api}/lists`, ListRouter);
 app.use(`${api}/comments`, commentRouter);
 app.use(`${api}/tasks`, taskRouter);
 

@@ -4,6 +4,7 @@ import { url } from "../ApiUrl";
 import HomePost from "../components/HomePost";
 import { SearchContext } from "../context/SearchContext";
 import ContentLoader from "../components/ContentLoader";
+import ProjectPost from "../components/ProjectPost";
 
 export interface Post {
   _id:any,
@@ -34,13 +35,13 @@ const Dashboard: React.FC = () => {
   };
 
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
 
-  useEffect(() => {
-    setPosts(filteredList);
-  }, [filteredList]);
+  // useEffect(() => {
+  //   setPosts(filteredList);
+  // }, [filteredList]);
 
   return (
     <div className="px-6 md:px-[100px] ">
@@ -49,7 +50,8 @@ const Dashboard: React.FC = () => {
           <ContentLoader />
         </div>
       ) : (
-        <HomePost posts={posts} />
+          // <HomePost posts={posts} />
+          <ProjectPost/>
       )}
     </div>
   );

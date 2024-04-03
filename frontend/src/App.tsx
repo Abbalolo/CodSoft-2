@@ -10,7 +10,9 @@ import Editcategory from "./Pages/post/Editcategory";
 import Profile from "./Pages/user/Profile";
 import { UserContextProvider } from "./context/UserContext";
 import { SearchProvider } from "./context/SearchContext";
-import MyBlog from "./Pages/user/MyBlog";
+import ProjectPost from "./components/ProjectPost";
+import ProjectDetails from "./Pages/project/ProjectDetails";
+
 
 function App() {
   return (
@@ -26,7 +28,10 @@ function App() {
             <Route path="/write" element={<CreatePost />} />
             <Route path="/edit/:id" element={<Editcategory />} />
             <Route path="/profile/:id" element={<Profile />} />
-            <Route path="/my-blog" element={<MyBlog />} />
+            {/*  */}
+            <Route path="/pojectPost" element={<ProjectPost />} />
+            <Route path="/project/projectId" element={<ProjectDetails />} />
+           
           </Routes>
           <Footer />
         </BrowserRouter>

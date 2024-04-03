@@ -14,6 +14,7 @@ const HomePost: React.FC<HomePostProps> = ({ posts}) => {
   const { user } = useContext(UserContext);
 
   return (
+    <>
     <div className=" flex flex-col  my-8 gap-5">
       {posts.length != 0 ? (
         posts?.map((post) => (
@@ -49,7 +50,8 @@ const HomePost: React.FC<HomePostProps> = ({ posts}) => {
             </Link>
           </div>
         ))
-      ) : (
+        )
+          : (
         <div className="h-screen w-full text-center">
           <p className=" font-semibold text-2xl lg:text-3xl ">
             sorry post not available
@@ -57,7 +59,7 @@ const HomePost: React.FC<HomePostProps> = ({ posts}) => {
         </div>
       )}
     </div>
-   
+   </>
   );
 };
 

@@ -5,40 +5,48 @@ import { UserContext } from "../context/UserContext";
 
 interface MenuProps {
   handleLogOut: () => void;
-  closeMenu: () => void; // Add closeMenu prop
+  closeMenu: () => void;
+  setToggleCreate: (value: boolean) => void;
 }
 
-const Menu: React.FC<MenuProps> = ({ handleLogOut, closeMenu }) => {
+const Menu: React.FC<MenuProps> = ({ handleLogOut, closeMenu ,setToggleCreate}) => {
   const { user } = useContext(UserContext);
 
 
   const handleClick = () => {
-    closeMenu(); // Call closeMenu function when a link is clicked
+    closeMenu(); 
   };
 
   return (
-    <div className="absolute top-8 right-0 md:top-10 overflow-hidden bg-slate-900  rounded-md shadow-md text-slate-200  justify-start items-start w-40 md:w-48">
+    <div className="absolute top-8 right-0 md:top-10 overflow-hidden border border-gray-300 bg-white text-black   rounded-md shadow-md   justify-start items-start w-40 md:w-48">
       <ul className="flex flex-col">
         {user ? (
-          <div>
-            <h3 className="border border-gray-800 p-2 text-sm">
+          <div className="divide-y">
+            <h3 className="hover:bg-slate-100 p-2 text-sm">
               <Link to="/" onClick={handleClick}>
                 Dashboard
               </Link>
             </h3>
-            <h3 className="border border-gray-800 p-2 text-sm">
-              <Link to={user ?`/profile/${user?._id}`:"/login"} onClick={handleClick}>
+            <h3 className="hover:bg-slate-100 p-2 text-sm">
+              <Link
+                to={user ? `/profile/${user?._id}` : "/login"}
+                onClick={handleClick}
+              >
                 Profile
               </Link>
             </h3>
-            <h3 className="border border-gray-800 p-2 text-sm md:hidden">
-              <Link to="/write" onClick={handleClick}>
-                Write
-              </Link>
+            <h3 className="hover:bg-slate-100 p-2 text-sm md:hidden cursor-pointer">
+              <span  onClick={() =>{
+                handleClick();
+                setToggleCreate(true)
+                 
+              }}>
+                Add new project
+              </span>
             </h3>
-            <h3 className="border border-gray-800 p-2 text-sm">
-              <Link to="/my-blog" onClick={handleClick}>
-                My Blog
+            <h3 className="hover:bg-slate-100 p-2 text-sm">
+              <Link to="/my-project" onClick={handleClick}>
+                My Project
               </Link>
             </h3>
             <h3
@@ -46,19 +54,19 @@ const Menu: React.FC<MenuProps> = ({ handleLogOut, closeMenu }) => {
                 handleLogOut();
                 handleClick();
               }}
-              className="border border-gray-800 p-2 text-sm"
+              className=" p-2 hover:bg-slate-100 text-sm cursor-pointer"
             >
               Logout
             </h3>
           </div>
         ) : (
-          <div>
-            <h3 className="border border-gray-800 p-2">
+          <div className="divide-y">
+            <h3 className=" p-2 hover:bg-slate-100">
               <Link to="/login" onClick={handleClick}>
                 Login
               </Link>
             </h3>
-            <h3 className="border border-gray-800 p-2">
+            <h3 className=" p-2 hover:bg-slate-100">
               <Link to="/register" onClick={handleClick}>
                 Register
               </Link>

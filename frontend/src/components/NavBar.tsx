@@ -1,5 +1,5 @@
-// NavBar.tsx
-import { HiMenuAlt3 } from "react-icons/hi";
+import { AiOutlineMenu } from "react-icons/ai"; 
+import person from "../assets/person.png"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect, useRef } from "react";
 import Menu from "./Menu";
@@ -7,6 +7,7 @@ import SearchBar from "./SearchBar";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { url } from "../ApiUrl";
+import CreateProjectModal from "./Action/CreateProjectModal";
 
 function NavBar() {
   const [toggle, setToggle] = useState(false);
@@ -14,6 +15,7 @@ function NavBar() {
   const navigate = useNavigate();
   const param = useLocation().pathname;
   const menuRef = useRef<HTMLDivElement>(null);
+  const [toggleCreate, setToggleCreate] = useState<boolean>(false)
 
   const handleLogOut = async () => {
     try {
@@ -26,7 +28,7 @@ function NavBar() {
   };
 
   const closeMenu = () => {
-    setToggle(false); // Function to close the menu
+    setToggle(false); 
   };
 
   useEffect(() => {
@@ -43,18 +45,24 @@ function NavBar() {
   }, []);
 
   return (
-    <div className="flex justify-between items-center px-6 md:px-[150px] py-4">
-      <Link to="/" className="font-extrabold lg:text-xl text-lg">
-        CodSoft
+    <div className="flex justify-between items-center px-8 md:px-[50px] py-5">
+      <Link to="/" className="font-extrabold lg:text-xl text-base">
+        <span className="text-red-400">CodSoft</span> Manage
       </Link>
       {param === "/" && <SearchBar />}
-      <div className=" items-center gap-3   md:flex">
+      <div className="md:flex justify-center items-center gap-3  ">
         <div className=" items-center  hidden md:flex">
           {user ? (
             <h3>
-              <Link onClick={() => setToggle(false)} to="/write">
-                Write
-              </Link>
+              <span
+                onClick={() => {
+                  setToggle(false);
+                  setToggleCreate(true);
+                }}
+                className="bg-black text-white py-2 px-3 rounded-md shadow-md"
+              >
+                Add project
+              </span>
             </h3>
           ) : (
             <div className="flex items-center gap-3">
@@ -67,15 +75,31 @@ function NavBar() {
             </div>
           )}
         </div>
-        <div className="relative" ref={menuRef}>
+        <div className="relative flex items-center gap-3" ref={menuRef}>
+          <img
+            className="rounded-full w-[25px] h-[25px]"
+            src={person}
+            alt="profile image"
+          />
           <button className="" onClick={() => setToggle(!toggle)}>
-            <HiMenuAlt3 className="text-[20px]" />
+            <AiOutlineMenu className="text-[20px]" />
           </button>
           {toggle ? (
-            <Menu handleLogOut={handleLogOut} closeMenu={closeMenu} />
+            <Menu
+              handleLogOut={handleLogOut}
+              setToggleCreate={setToggleCreate}
+              closeMenu={closeMenu}
+            />
           ) : null}
         </div>
       </div>
+
+      {toggleCreate ? (
+        <div>
+          <div className="absolute top-0 left-0 bg-[#00000066] w-full h-screen"></div>
+          <CreateProjectModal setToggleCreate={setToggleCreate} />
+        </div>
+      ) : null}
     </div>
   );
 }
