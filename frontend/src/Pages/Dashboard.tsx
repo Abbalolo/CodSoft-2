@@ -6,26 +6,25 @@ import { SearchContext } from "../context/SearchContext";
 import ContentLoader from "../components/ContentLoader";
 import ProjectPost from "../components/ProjectPost";
 
-export interface Post {
+export interface Project {
   _id:any,
   title: string;
-  description: string;
-  photo: string;
   username: string;
   updatedAt: string;
   userId: string;
 }
 
 const Dashboard: React.FC = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { filteredList } = useContext(SearchContext);
 
-  const fetchPosts = async () => {
+  const fetchProject = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get<Post[]>(`${url}/api/v1/posts/`);
-      setPosts(response.data);
+      const response = await axios.get<Project[]>(`${url}/api/v1/projects/`);
+      setProjects(response.data);
+      console.log(response.data);
      
       setIsLoading(false);
     } catch (error) {
@@ -35,13 +34,15 @@ const Dashboard: React.FC = () => {
   };
 
 
-  // useEffect(() => {
-  //   fetchPosts();
-  // }, []);
 
-  // useEffect(() => {
-  //   setPosts(filteredList);
-  // }, [filteredList]);
+
+  useEffect(() => {
+    fetchProject();
+  }, []);
+
+  useEffect(() => {
+    setProjects(filteredList);
+  }, [filteredList]);
 
   return (
     <div className="px-6 md:px-[100px] ">
@@ -51,7 +52,7 @@ const Dashboard: React.FC = () => {
         </div>
       ) : (
           // <HomePost posts={posts} />
-          <ProjectPost/>
+          <ProjectPost projects={projects} />
       )}
     </div>
   );

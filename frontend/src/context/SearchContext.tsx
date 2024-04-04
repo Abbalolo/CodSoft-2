@@ -9,14 +9,12 @@ type MyComponentProps = {
 interface SearchContextType {
   searchQuery: string;
   handleSearch: (query: string) => void;
-  filteredList: Post[];
+  filteredList: Project[];
 }
 
-export interface Post {
+export interface Project {
   _id: any,
   title: string;
-  description: string;
-  photo: string;
   username: string;
   updatedAt: string;
   userId: string;
@@ -29,18 +27,17 @@ export const SearchContext = createContext<SearchContextType>({
 });
 
 export const SearchProvider = ({ children }: MyComponentProps) => {
-  const [filteredList, setFilteredList] = useState<Post[]>([]);
+  const [filteredList, setFilteredList] = useState<Project[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const fetchPosts = async (query: string) => {
+  const fetchProjects = async (query: string) => {
      try {
-       const response = await axios.get<Post[]>(`${url}/api/v1/posts/`);
+       const response = await axios.get<Project[]>(`${url}/api/v1/projects/`);
 
        const filtered = query
          ? response.data.filter(
              (item) =>
-               item.title.toLowerCase().includes(query.toLowerCase()) ||
-               item.description.toLowerCase().includes(query.toLowerCase())
+               item.title.toLowerCase().includes(query.toLowerCase()) 
            )
          : [];
        setFilteredList(filtered);
@@ -51,7 +48,7 @@ export const SearchProvider = ({ children }: MyComponentProps) => {
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-    fetchPosts(query);
+    fetchProjects(query);
   };
 
   return (

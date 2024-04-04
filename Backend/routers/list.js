@@ -59,14 +59,14 @@ router.delete("/:id",  async (req, res) => {
 //   }
 // });
 
-// router.get("/", async (req, res) => {
-//   try {
-//     const project = await Project.find();
-//     res.status(200).json(project);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+router.get("/", async (req, res) => {
+  try {
+    const project = await Project.find();
+    res.status(200).json(project);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // router.get("/user/:userId", async (req, res) => {
 //   try {

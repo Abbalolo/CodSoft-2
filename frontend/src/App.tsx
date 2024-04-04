@@ -30,8 +30,7 @@ function App() {
             <Route path="/profile/:id" element={<Profile />} />
             {/*  */}
             <Route path="/pojectPost" element={<ProjectPost />} />
-            <Route path="/project/projectId" element={<ProjectDetails />} />
-           
+            <Route path="/projects/project/:projectId" element={<ProjectDetails />} />
           </Routes>
           <Footer />
         </BrowserRouter>

@@ -38,6 +38,11 @@ const TaskSchema = new mongoose.Schema(
       ref: "Project",
       required: true,
     },
+    listId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "List",
+      required: true,
+    },
   },
   { timestamps: true }
 );
