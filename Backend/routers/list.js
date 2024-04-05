@@ -3,6 +3,7 @@ const router = express.Router();
 const List = require("../models/List");
 const Comment = require("../models/comment");
 const verifyToken = require("../verifyToken");
+const Task = require("../models/task");
 
 router.post("/create", async (req, res) => {
   try {
@@ -37,10 +38,10 @@ router.delete("/:id",  async (req, res) => {
     if (!deleteList) {
       return res.status(404).json({ message: "Post not found" });
     }
-    // await Comment.deleteMany({ postId: req.params.id });
+    await Task.deleteMany({ listId: req.params.id });
     res
       .status(200)
-      .json({ message: "Post and associated comments have been deleted" });
+      .json({ message: "Post and associated task have been deleted" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -61,8 +62,8 @@ router.delete("/:id",  async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const project = await Project.find();
-    res.status(200).json(project);
+    const list = await List.find();
+    res.status(200).json(list);
   } catch (err) {
     res.status(500).json(err);
   }

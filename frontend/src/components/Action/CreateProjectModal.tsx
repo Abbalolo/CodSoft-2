@@ -35,6 +35,7 @@ function CreateProjectModal({ setToggleCreate }: CreateProjectModalProps) {
             placeholder="Project name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
           {error ? (
             <span className="text-sm text-red-400 py-1">
@@ -48,7 +49,7 @@ function CreateProjectModal({ setToggleCreate }: CreateProjectModalProps) {
           Submit
         </button>
       </form>
-      <div className="flex items-end justify-end mt-6">
+      <div className="flex items-end justify-end mt-3">
         <button
           onClick={() => setToggleCreate(false)}
           className="bg-black w-20 p-2  rounded-md mt-4 text-white shadow-md hover:bg-slate-800 "

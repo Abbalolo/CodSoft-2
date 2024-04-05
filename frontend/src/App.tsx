@@ -4,10 +4,7 @@ import Dashboard from "./Pages/Dashboard";
 import Footer from "./components/Footer";
 import Register from "./Pages/auth/Register";
 import Login from "./Pages/auth/Login";
-import PostDetails from "./Pages/post/PostDetails";
-import CreatePost from "./Pages/post/CreatePost";
-import Editcategory from "./Pages/post/Editcategory";
-import Profile from "./Pages/user/Profile";
+
 import { UserContextProvider } from "./context/UserContext";
 import { SearchProvider } from "./context/SearchContext";
 import ProjectPost from "./components/ProjectPost";
@@ -24,10 +21,6 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/posts/post/:postId" element={<PostDetails />} />
-            <Route path="/write" element={<CreatePost />} />
-            <Route path="/edit/:id" element={<Editcategory />} />
-            <Route path="/profile/:id" element={<Profile />} />
             {/*  */}
             <Route path="/pojectPost" element={<ProjectPost />} />
             <Route path="/projects/project/:projectId" element={<ProjectDetails />} />

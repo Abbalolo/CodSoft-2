@@ -24,6 +24,7 @@ router.post("/create", async (req, res) => {
     priority,
     status,
     projectId,
+    listId,
   } = req.body;
 
   // Validate required fields
@@ -37,7 +38,8 @@ router.post("/create", async (req, res) => {
     assignedTo.length === 0 || // Ensure assignedTo array is not empty
     !priority ||
     !status ||
-    !projectId
+    !projectId || // Added missing comma here
+    !listId // Added listId field
   ) {
     return res.status(400).json({ message: "All fields are required" });
   }
@@ -66,6 +68,7 @@ router.post("/create", async (req, res) => {
       priority,
       status,
       projectId,
+      listId, // Added listId here
     });
 
     const savedTask = await newTask.save();
@@ -110,6 +113,18 @@ router.get("/project/:projectId", async (req, res) => {
   }
 });
 
+// Get tasks by list ID
+router.get("/list/:listId", async (req, res) => {
+  const listId = req.params.listId;
+
+  try {
+    const tasks = await Task.find({ listId });
+    res.json(tasks);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Delete a task
 router.delete("/:id", async (req, res) => {
   try {
@@ -120,6 +135,20 @@ router.delete("/:id", async (req, res) => {
 
     await task.deleteOne();
     res.json({ message: "Task deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.get("/:taskId", async (req, res) => {
+  const taskId = req.params.taskId;
+
+  try {
+    const task = await Task.findById(taskId);
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+    res.json(task);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
