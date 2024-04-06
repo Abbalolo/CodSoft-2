@@ -9,6 +9,8 @@ import { UserContextProvider } from "./context/UserContext";
 import { SearchProvider } from "./context/SearchContext";
 import ProjectPost from "./components/ProjectPost";
 import ProjectDetails from "./Pages/project/ProjectDetails";
+import MyProjects from "./Pages/project/MyProjects";
+import Profile from "./Pages/user/Profile";
 
 
 function App() {
@@ -22,8 +24,10 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             {/*  */}
-            <Route path="/pojectPost" element={<ProjectPost />} />
+            <Route path="/pojectPost" element={<ProjectPost projects={projects}/>} />
             <Route path="/projects/project/:projectId" element={<ProjectDetails />} />
+            <Route path="/my-project" element={<MyProjects />} />
+            <Route path="/profile/:userId" element={<Profile />} />
           </Routes>
           <Footer />
         </BrowserRouter>

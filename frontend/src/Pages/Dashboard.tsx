@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../ApiUrl";
-import HomePost from "../components/HomePost";
 import { SearchContext } from "../context/SearchContext";
 import ContentLoader from "../components/ContentLoader";
 import ProjectPost from "../components/ProjectPost";
@@ -12,6 +11,7 @@ export interface Project {
   username: string;
   updatedAt: string;
   userId: string;
+  color: string;
 }
 
 const Dashboard: React.FC = () => {
@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
           <ContentLoader />
         </div>
       ) : (
-          // <HomePost posts={posts} />
+   
           <ProjectPost projects={projects} />
       )}
     </div>

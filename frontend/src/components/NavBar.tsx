@@ -1,5 +1,4 @@
 import { AiOutlineMenu } from "react-icons/ai"; 
-import person from "../assets/person.png"
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect, useRef } from "react";
 import Menu from "./Menu";
@@ -76,11 +75,7 @@ function NavBar() {
           )}
         </div>
         <div className="relative flex items-center gap-3" ref={menuRef}>
-          <img
-            className="rounded-full w-[25px] h-[25px]"
-            src={person}
-            alt="profile image"
-          />
+        
           <button className="" onClick={() => setToggle(!toggle)}>
             <AiOutlineMenu className="text-[20px]" />
           </button>

@@ -18,6 +18,7 @@ export interface Project {
   username: string;
   updatedAt: string;
   userId: string;
+  color: string;
 }
 
 export const SearchContext = createContext<SearchContextType>({

@@ -1,29 +1,74 @@
-import { MdOutlinePending } from "react-icons/md";
-import {
-  AiOutlineFundProjectionScreen,
-  AiOutlineProject,
-} from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
-import { Project } from "../Pages/Dashboard";
+import { TbTrashFilled } from "react-icons/tb"; 
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+// import { MdOutlinePending } from "react-icons/md";
+// import {
+//   AiOutlineFundProjectionScreen,
+//   AiOutlineProject,
+// } from "react-icons/ai";
 
-interface Props {
-  projects: Project[];
+import { UserContext } from "../../context/UserContext";
+import { url } from "../../ApiUrl";
+import Loader from "../../components/Loader";
+
+export interface Project {
+  _id: any;
+  title: string;
+  username: string;
+  updatedAt: string;
+  userId: string;
+    color: string;
 }
 
-function ProjectPost({ projects }: Props) {
-  const { user } = useContext(UserContext);
-  console.log(projects)
+function MyProjects() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+
+
+  const fetchProject = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get<Project[]>(
+        `${url}/api/v1/projects/user/${user?._id}`
+      );
+      setProjects(response.data);
+      console.log(response.data)
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+      setIsLoading(false);
+    }
+    };
+      useEffect(() => {
+        fetchProject();
+      }, []);
+
+  const deleteProject = async (proId: any) => {
+
+    try {
+        const response = await axios.delete(`${url}/api/v1/projects/${proId}`);
+        console.log(response.data)
+        fetchProject();
+        navigate("/");
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+
+    }
+  };
 
   return (
-    <div className="py-10 flex flex-col lg:flex-row gap-3">
-      {projects.length !== 0 ? (
+    <div className="py-10 flex flex-col lg:flex-row gap-3 px-6 h-screen">
+      {isLoading ? (
+        <Loader />
+      ) : projects.length !== 0 ? (
         projects.map((project, index) => (
-          <div key={index} className="flex flex-col gap-3 md:w-[55%]">
+          <div key={index} className="flex  gap-3 md:w-[55%]">
             <Link
               to={user ? `/projects/project/${project._id}` : "/login"}
-              className="flex items-center justify-between pr-2 gap-2 border hover:bg-slate-100 rounded-sm w-full"
+              className="flex items-center justify-between pr-2  gap-2 border  rounded-sm w-full"
             >
               <div className="flex items-center text-sm">
                 <div
@@ -38,18 +83,22 @@ function ProjectPost({ projects }: Props) {
                 <p>{new Date(project.updatedAt).toString().slice(0, 15)}</p>
                 <p>{new Date(project.updatedAt).toString().slice(15, 24)}</p>
               </div>
+
             </Link>
+              <button onClick={() => deleteProject(project._id)} className="hover:bg-red-400 hover:text-white h-full px-3   border transition-all duration-500">
+                <TbTrashFilled />
+              </button>
           </div>
         ))
       ) : (
         <div className="h-screen w-full text-center">
           <p className="font-semibold text-2xl lg:text-3xl">
-            Sorry, posts not available
+            No projects available
           </p>
         </div>
       )}
 
-      <div className="border md:w-[45%] h-full">
+      {/* <div className="border md:w-[45%] h-full">
         <div className="flex flex-col lg:flex-row gap-10 md:gap-0 lg:divide-x divide-y">
           <Link
             to="#"
@@ -84,9 +133,9 @@ function ProjectPost({ projects }: Props) {
             </p>
           </Link>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
 
-export default ProjectPost;
+export default MyProjects;

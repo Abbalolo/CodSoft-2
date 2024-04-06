@@ -1,4 +1,10 @@
-import { FormEvent, useEffect, useState } from "react";
+import axios from "axios";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import { url } from "../../ApiUrl";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
+
+
 
 interface CreateProjectModalProps {
   setToggleCreate: (value: boolean) => void;
@@ -6,10 +12,30 @@ interface CreateProjectModalProps {
 
 function CreateProjectModal({ setToggleCreate }: CreateProjectModalProps) {
   const [error, setError] = useState<boolean>(false);
-  const [name, setName] = useState<string>("");
 
-  const handleForm = (event: FormEvent<HTMLFormElement>) => {
+  const [name, setName] = useState<string>("");
+  const  navigate = useNavigate()
+const {user} = useContext(UserContext)
+
+  const handleForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    try {
+      const newProject = {
+        title: name,
+        userId: user?._id
+
+      }
+     const res = await axios.post(`${url}/api/v1/projects/create`, newProject, {
+       withCredentials: true,
+     });
+      console.log(res.data)
+      setToggleCreate(false)
+    window.location.reload()
+      navigate("/")
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const validate = () => {
@@ -22,6 +48,8 @@ function CreateProjectModal({ setToggleCreate }: CreateProjectModalProps) {
   useEffect(() => {
     validate();
   }, [name]);
+
+
 
   return (
     <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[80%] rounded-md shadow-md p-5 border">

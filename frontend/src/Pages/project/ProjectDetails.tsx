@@ -17,7 +17,8 @@ export interface Task {
   status: string;
   priority: string;
   projectId: string;
-  listId: string;
+  listId: any;
+
 }
 function ProjectDetails() {
   const [lists, setLists] = useState<
@@ -25,13 +26,14 @@ function ProjectDetails() {
   >([]);
   const [listName, setListName] = useState<string>("");
   const [listArr, setListArr] = useState<
-    { _id: number; name: string; color: string }[]
+    { _id: number; userId: string; name: string; color: string }[]
   >([]);
   const { user } = useContext(UserContext);
   const { projectId } = useParams();
   const [taskArr, setTaskArr] = useState<Task[]>([])
   const [addNewTask, setAddNewTask] = useState<boolean>(false); 
- console.log(lists)
+
+console.log(taskArr)
   const fetchList = async () => {
     try {
       const res = await axios.get(`${url}/api/v1/lists/project/${projectId}`);
@@ -43,7 +45,9 @@ function ProjectDetails() {
   };
   const fetchTasksForList = async () => {
     try {
-      const res = await axios.get(`${url}/api/v1/tasks/project/${projectId}`);
+      const res = await axios.get<Task[]>(
+        `${url}/api/v1/tasks/project/${projectId}`
+      );
       console.log(res.data);
       setTaskArr(res.data)
     } catch (error) {
@@ -84,21 +88,21 @@ function ProjectDetails() {
       console.log(error);
     }
   };
-  const UpdateList = async (listId: any) => {
-    try {
-      const updatedList = {
-        name: listName,
+  // const UpdateList = async (listId: any) => {
+  //   try {
+  //     const updatedList = {
+  //       name: listName,
     
-      };
-      const res = await axios.put(`${url}/api/v1/lists/${listId}`, updatedList, {
-        withCredentials: true,
-      });
-      console.log(res.data);
-      fetchList();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     };
+  //     const res = await axios.put(`${url}/api/v1/lists/${listId}`, updatedList, {
+  //       withCredentials: true,
+  //     });
+  //     console.log(res.data);
+  //     fetchList();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleListSubmit = async (id: number) => {
     console.log(`Form submitted for list with ID ${id} and name ${listName}`);
@@ -155,16 +159,21 @@ function ProjectDetails() {
               onChange={(e) => handleChange(e, list._id)}
               // onBlur={() => handleListSubmit(list._id)}
             />
-            <div className="flex items-center gap-3">
-              <BiPlus
-                className="text-lg text-white relative cursor-pointer"
-                onClick={() => setAddNewTask(true)}
-              />
-              <MdOutlineDelete
-                onClick={() => deleteList(list._id)}
-                className="text-lg text-white relative cursor-pointer"
-              />
-            </div>
+            {user?._id === list.userId && (
+              <div className="flex items-center gap-3">
+                {!taskArr.some((task) => task.listId === list._id) && (
+                  <BiPlus
+                    className="text-lg text-white relative cursor-pointer"
+                    onClick={() => setAddNewTask(true)}
+                  />
+                )}
+
+                <MdOutlineDelete
+                  onClick={() => deleteList(list._id)}
+                  className="text-lg text-white relative cursor-pointer"
+                />
+              </div>
+            )}
           </form>
 
           <TaskData taskArr={taskArr} listId={list._id} />
@@ -196,9 +205,7 @@ function ProjectDetails() {
               placeholder="List name"
               value={list.name}
               onChange={(e) => handleChange(e, list.id)}
-             
             />
-           
           </form>
         </div>
       ))}

@@ -5,11 +5,13 @@ import UpdateTask from "./UpdateTask";
 
 interface Props {
   taskArr: Task[];
-  listId: string;
+  listId: number;
+
 }
 
 function TaskData({ taskArr, listId }: Props) {
   const [updatedTask, setUpdatedTask] = useState<boolean>(false);
+
   return (
     <>
       {taskArr.map(
@@ -63,8 +65,13 @@ function TaskData({ taskArr, listId }: Props) {
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm font-semibold">
-                  <p>{new Date(task.startDate).toString().slice(0, 15)}</p>
-                  <p>{new Date(task.endDate).toString().slice(0, 15)}</p>
+                  <p>
+                    Start date:{" "}
+                    {new Date(task.startDate).toString().slice(0, 15)}
+                  </p>
+                  <p>
+                    End date: {new Date(task.endDate).toString().slice(0, 15)}
+                  </p>
                 </div>
               </div>
               {updatedTask && (
