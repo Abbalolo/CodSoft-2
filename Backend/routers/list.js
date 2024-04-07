@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const List = require("../models/list"); 
+const List = require("../models/List"); 
 const Task = require("../models/task");
 
 router.post("/create", async (req, res) => {
