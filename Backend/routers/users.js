@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const Project = require("../models/project");
-const Comment = require("../models/comment");
+
 const bcrypt = require("bcrypt");
 const verifyToken = require("../verifyToken");
+const List = require("../models/List");
+const Task = require("../models/task");
 
 router.get("/",  async (req, res) => {
   try {
@@ -43,7 +45,8 @@ router.delete("/:id", verifyToken, async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     await Project.deleteMany({ userId: req.params.id });
-    await Comment.deleteMany({ userId: req.params.id });
+    await List.deleteMany({ projectId: req.params.id });
+    await Task.deleteMany({ listId: req.params.id });
     res.status(200).json({ message: "User has been deleted successfully" });
   } catch (err) {
     res.status(500).json(err);

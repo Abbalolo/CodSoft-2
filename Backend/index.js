@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
@@ -12,6 +13,7 @@ const userRouter = require("./routers/users");
 const taskRouter = require("./routers/task");
 const ProjectRouter = require("./routers/project");
 const ListRouter = require("./routers/list");
+
 require("dotenv").config();
 
 const api = process.env.API_URL;
@@ -22,7 +24,7 @@ const connectDb = async () => {
     console.log("Database connected successfully");
   } catch (err) {
     console.error(err);
-    process.exit(1); // Exit the process if unable to connect to the database
+    process.exit(1); 
   }
 };
 

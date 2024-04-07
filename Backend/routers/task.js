@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Task = require("../models/task");
-const User = require("../models/user"); // Import User model if not already imported
+const User = require("../models/user"); 
 
 // Get all tasks
 router.get("/", async (req, res) => {
