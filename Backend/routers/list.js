@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const List = require("../models/List");
-const verifyToken = require("../verifyToken");
+const List = require("../models/list"); 
 const Task = require("../models/task");
 
 router.post("/create", async (req, res) => {
@@ -31,33 +30,30 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id",  async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const deleteList = await List.findByIdAndDelete(req.params.id);
     if (!deleteList) {
-      return res.status(404).json({ message: "Post not found" });
+      return res.status(404).json({ message: "List not found" });
     }
+    await List.deleteMany({ listId: req.params.id });
     await Task.deleteMany({ listId: req.params.id });
     res
       .status(200)
-      .json({ message: "Post and associated task have been deleted" });
+      .json({ message: "List and associated tasks have been deleted" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-
-
 router.get("/", async (req, res) => {
   try {
-    const list = await List.find();
-    res.status(200).json(list);
+    const lists = await List.find();
+    res.status(200).json(lists);
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
-
 
 router.get("/project/:projectId", async (req, res) => {
   try {
@@ -68,4 +64,5 @@ router.get("/project/:projectId", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 module.exports = router;
