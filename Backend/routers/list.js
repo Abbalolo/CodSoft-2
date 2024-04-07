@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const List = require("../models/List");
-const Comment = require("../models/comment");
 const verifyToken = require("../verifyToken");
 const Task = require("../models/task");
 
@@ -47,18 +46,7 @@ router.delete("/:id",  async (req, res) => {
   }
 });
 
-// router.get("/:id", async (req, res) => {
-//   try {
-//     const project = await Project.findById(req.params.id);
-//     if (!project) {
-//       res.status(404).json({ message: "Post not found" });
-//       return;
-//     }
-//     res.status(200).json(project);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+
 
 router.get("/", async (req, res) => {
   try {
@@ -69,14 +57,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// router.get("/user/:userId", async (req, res) => {
-//   try {
-//     const list = await List.find({ userId: req.params.userId });
-//     res.status(200).json(list);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+
 
 router.get("/project/:projectId", async (req, res) => {
   try {
