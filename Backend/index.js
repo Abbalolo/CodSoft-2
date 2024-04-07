@@ -32,7 +32,12 @@ const connectDb = async () => {
 app.use(express.json());
 
 app.use("/images", express.static(path.join(__dirname, "images")));
-app.use(cors({ origin: "https://codsoft-project-management.netlify.app", credentials: true }));
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "https://codsoft-2-p390.onrender.com"],
+    credentials: true,
+  })
+);
 app.use(cookieParser());
 
 // Middleware for logging HTTP requests
