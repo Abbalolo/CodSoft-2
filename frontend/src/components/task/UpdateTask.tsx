@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { url } from "../../ApiUrl";
 import axios from "axios";
-import { MdOutlineDelete } from "react-icons/md";
+// import { MdOutlineDelete } from "react-icons/md";
 
 interface Props {
   setUpdatedTask: (value: boolean) => void;
@@ -88,10 +88,10 @@ function UpdateTask({ setUpdatedTask, taskId }: Props) {
     }
   };
 
-  const removeUser = (id: number) => {
-    const updatedUsers = selectedUsers.filter((user, index) => index !== id);
-    setSelectedUsers(updatedUsers);
-  };
+  // const removeUser = (id: number) => {
+  //   const updatedUsers = selectedUsers.filter((user, index) => index !== id);
+  //   setSelectedUsers(updatedUsers);
+  // };
 
   useEffect(() => {
     fetchTask();
@@ -150,7 +150,7 @@ function UpdateTask({ setUpdatedTask, taskId }: Props) {
           <option value="High">High</option>
         </select>
         <div className="flex flex-col">
-          {selectedUsers.map((select, index) => (
+          {/* {selectedUsers.map((select, index) => (
             <div
               key={select._id}
               className="border text-white flex items-center p-2 gap-3 rounded-sm"
@@ -166,7 +166,7 @@ function UpdateTask({ setUpdatedTask, taskId }: Props) {
                 className="mr-1 cursor-pointer"
               />
             </div>
-          ))}
+          ))} */}
           <div className="flex mt-3 flex-wrap gap-2">
             {assignUsers.map((user, index) => (
               <div
