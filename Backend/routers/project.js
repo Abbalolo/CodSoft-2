@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Project = require("../models/project");
 const verifyToken = require("../verifyToken");
-const List = require("../models/List");
+const List = require("../models/list");
 
 router.post("/create",  async (req, res) => {
   try {

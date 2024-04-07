@@ -5,7 +5,7 @@ const Project = require("../models/project");
 
 const bcrypt = require("bcrypt");
 const verifyToken = require("../verifyToken");
-const List = require("../models/List");
+const List = require("../models/list");
 const Task = require("../models/task");
 
 router.get("/",  async (req, res) => {
