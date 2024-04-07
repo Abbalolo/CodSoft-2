@@ -24,7 +24,7 @@ function UpdateTask({ setUpdatedTask, taskId }: Props) {
   const [status, setStatus] = useState<string>("");
   const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
   const [assignUsers, setAssignUsers] = useState<User[]>([]);
-console.log(selectedUsers)
+
   const fetchTask = async () => {
     try {
       const res = await axios.get(`${url}/api/v1/tasks/${taskId}`);
@@ -71,6 +71,7 @@ console.log(selectedUsers)
         `${url}/api/v1/tasks/${taskId}`,
         updateTaskData
       );
+      console.log(res.data)
       setUpdatedTask(false)
     } catch (error) {
       console.log(error);
@@ -149,7 +150,7 @@ console.log(selectedUsers)
           <option value="High">High</option>
         </select>
         <div className="flex flex-col">
-          {/* {selectedUsers.map((select, index) => (
+          {selectedUsers.map((select, index) => (
             <div
               key={select._id}
               className="border text-white flex items-center p-2 gap-3 rounded-sm"
@@ -165,7 +166,7 @@ console.log(selectedUsers)
                 className="mr-1 cursor-pointer"
               />
             </div>
-          ))} */}
+          ))}
           <div className="flex mt-3 flex-wrap gap-2">
             {assignUsers.map((user, index) => (
               <div

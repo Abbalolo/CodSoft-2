@@ -1,9 +1,9 @@
-import {  useContext, useEffect, useState } from "react";
+import {  useContext,  useState } from "react";
 
 import axios from "axios";
 import { url } from "../../ApiUrl";
 import { UserContext } from "../../context/UserContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MyProjects from "../project/MyProjects";
 // import { useParams } from "react-router-dom";
 
@@ -13,7 +13,7 @@ function Profile() {
   // const [password, setPassword] = useState<string>("");
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-  const { postId } = useParams<{ postId: string | undefined }>();
+
 
 
 
@@ -28,7 +28,7 @@ function Profile() {
         },
         { withCredentials: true }
       );
-      // console.log(res.data);
+      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +38,7 @@ function Profile() {
     try {
       const res = await axios.delete(`${url}/api/v1/users/${user?._id}`,
         { withCredentials: true });
-      // console.log(res.data);
+      console.log(res.data);
       setUser(null)
       navigate("/login")
     } catch (error) {
