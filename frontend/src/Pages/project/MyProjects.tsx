@@ -73,7 +73,7 @@ function MyProjects() {
               <div className="flex items-center text-sm">
                 <div
                   style={{ backgroundColor: project.color }}
-                  className="border flex justify-center items-center font-bold p-4"
+                  className="border flex justify-center items-center font-bold p-4 w-[90px]"
                 >
                   {project.title.slice(0, 3).toUpperCase()}
                 </div>
@@ -83,11 +83,13 @@ function MyProjects() {
                 <p>{new Date(project.updatedAt).toString().slice(0, 15)}</p>
                 <p>{new Date(project.updatedAt).toString().slice(15, 24)}</p>
               </div>
-
             </Link>
-              <button onClick={() => deleteProject(project._id)} className="hover:bg-red-400 hover:text-white h-full px-3   border transition-all duration-500">
-                <TbTrashFilled />
-              </button>
+            <button
+              onClick={() => deleteProject(project._id)}
+              className="hover:bg-red-400 hover:text-white h-full px-3   border transition-all duration-500"
+            >
+              <TbTrashFilled />
+            </button>
           </div>
         ))
       ) : (

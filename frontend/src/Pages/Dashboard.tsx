@@ -4,6 +4,7 @@ import { url } from "../ApiUrl";
 import { SearchContext } from "../context/SearchContext";
 import ContentLoader from "../components/ContentLoader";
 import ProjectPost from "../components/ProjectPost";
+import { UserContext } from "../context/UserContext";
 
 export interface Project {
   _id:any,
@@ -16,17 +17,34 @@ export interface Project {
 
 const Dashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [userProjects, setUserProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { filteredList } = useContext(SearchContext);
-
+const {user} = useContext(UserContext)
   const fetchProject = async () => {
     setIsLoading(true);
     try {
       const response = await axios.get<Project[]>(`${url}/api/v1/projects/`);
-      setProjects(response.data);
-      console.log(response.data);
-     
+      setUserProjects(response.data);
+      // console.log(response.data);
       setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+      setIsLoading(false);
+    }
+   
+  };
+
+  
+
+  const fetchUsersProject = async () => {
+   try {
+     const response = await axios.get<Project[]>(
+       `${url}/api/v1/projects/user/${user?._id}`
+     );
+     setProjects(response.data);
+    //  console.log(response.data);
+       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching posts:", error);
       setIsLoading(false);
@@ -37,22 +55,24 @@ const Dashboard: React.FC = () => {
 
 
   useEffect(() => {
+    fetchUsersProject()
     fetchProject();
   }, []);
 
   useEffect(() => {
-    setProjects(filteredList);
+    setUserProjects(filteredList);
   }, [filteredList]);
 
   return (
-    <div className="px-6 md:px-[100px] ">
+    <div className="px-6 md:px-[100px]  ">
       {isLoading ? (
         <div className="h-screen w-full">
           <ContentLoader />
         </div>
       ) : (
-   
-          <ProjectPost projects={projects} />
+        <div className="lg:h-screen">
+          <ProjectPost projects={projects} userProjects={userProjects} />
+        </div>
       )}
     </div>
   );

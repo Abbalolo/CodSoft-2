@@ -22,32 +22,34 @@ const Menu: React.FC<MenuProps> = ({ handleLogOut, closeMenu ,setToggleCreate}) 
       <ul className="flex flex-col">
         {user ? (
           <div className="divide-y">
-            <h3 className="hover:bg-slate-100 p-2 text-sm">
-              <Link to="/" onClick={handleClick}>
-                Dashboard
-              </Link>
+            <h3
+              onClick={handleClick}
+              className="hover:bg-slate-100 p-2 text-sm"
+            >
+              <Link to="/">Dashboard</Link>
             </h3>
-            <h3 className="hover:bg-slate-100 p-2 text-sm">
-              <Link
-                to={user ? `/profile/${user?._id}` : "/login"}
-                onClick={handleClick}
-              >
+            <h3
+              onClick={handleClick}
+              className="hover:bg-slate-100 p-2 text-sm"
+            >
+              <Link to={user ? `/profile/${user?._id}` : "/login"}>
                 Profile
               </Link>
             </h3>
-            <h3 className="hover:bg-slate-100 p-2 text-sm md:hidden cursor-pointer">
-              <span  onClick={() =>{
+            <h3
+              onClick={() => {
                 handleClick();
-                setToggleCreate(true)
-                 
-              }}>
-                Add new project
-              </span>
+                setToggleCreate(true);
+              }}
+              className="hover:bg-slate-100 p-2 text-sm md:hidden cursor-pointer"
+            >
+              <span>Add new project</span>
             </h3>
-            <h3 className="hover:bg-slate-100 p-2 text-sm">
-              <Link to="/my-project" onClick={handleClick}>
-                My Project
-              </Link>
+            <h3
+              onClick={handleClick}
+              className="hover:bg-slate-100 p-2 text-sm"
+            >
+              <Link to="/my-project">My Project</Link>
             </h3>
             <h3
               onClick={() => {
@@ -61,15 +63,11 @@ const Menu: React.FC<MenuProps> = ({ handleLogOut, closeMenu ,setToggleCreate}) 
           </div>
         ) : (
           <div className="divide-y">
-            <h3 className=" p-2 hover:bg-slate-100">
-              <Link to="/login" onClick={handleClick}>
-                Login
-              </Link>
+            <h3 onClick={handleClick} className=" p-2 hover:bg-slate-100">
+              <Link to="/login">Login</Link>
             </h3>
-            <h3 className=" p-2 hover:bg-slate-100">
-              <Link to="/register" onClick={handleClick}>
-                Register
-              </Link>
+            <h3 onClick={handleClick} className=" p-2 hover:bg-slate-100">
+              <Link to="/register">Register</Link>
             </h3>
           </div>
         )}

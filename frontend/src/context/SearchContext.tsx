@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useState, useContext, ReactNode } from "react";
+import { createContext, useState, useContext, ReactNode, useEffect } from "react";
 import { url } from "../ApiUrl";
 
 type MyComponentProps = {
@@ -51,6 +51,7 @@ export const SearchProvider = ({ children }: MyComponentProps) => {
     setSearchQuery(query);
     fetchProjects(query);
   };
+
 
   return (
     <SearchContext.Provider value={{ searchQuery, handleSearch, filteredList }}>

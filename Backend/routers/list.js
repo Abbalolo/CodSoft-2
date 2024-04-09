@@ -36,7 +36,7 @@ router.delete("/:id", async (req, res) => {
     if (!deleteList) {
       return res.status(404).json({ message: "List not found" });
     }
-    await List.deleteMany({ listId: req.params.id });
+  
     await Task.deleteMany({ listId: req.params.id });
     res
       .status(200)

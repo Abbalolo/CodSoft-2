@@ -10,25 +10,26 @@ import { Project } from "../Pages/Dashboard";
 
 interface Props {
   projects: Project[];
+  userProjects: Project[];
 }
 
-function ProjectPost({ projects }: Props) {
+function ProjectPost({ projects, userProjects }: Props) {
   const { user } = useContext(UserContext);
-  console.log(projects)
 
   return (
     <div className="py-10 flex flex-col lg:flex-row gap-3">
       {projects.length !== 0 ? (
-        projects.map((project, index) => (
-          <div key={index} className="flex flex-col gap-3 md:w-[55%]">
+        <div className="flex flex-col gap-3 md:w-[55%]">
+          {projects.map((project, index) => (
             <Link
+              key={index}
               to={user ? `/projects/project/${project._id}` : "/login"}
               className="flex items-center justify-between pr-2 gap-2 border hover:bg-slate-100 rounded-sm w-full"
             >
               <div className="flex items-center text-sm">
                 <div
                   style={{ backgroundColor: project.color }}
-                  className="border flex justify-center items-center font-bold p-4"
+                  className="border text-white flex justify-center items-center font-bold p-4 w-[90px]"
                 >
                   {project.title.slice(0, 3).toUpperCase()}
                 </div>
@@ -39,8 +40,8 @@ function ProjectPost({ projects }: Props) {
                 <p>{new Date(project.updatedAt).toString().slice(15, 24)}</p>
               </div>
             </Link>
-          </div>
-        ))
+          ))}
+        </div>
       ) : (
         <div className="h-screen w-full text-center">
           <p className="font-semibold text-2xl lg:text-3xl">
@@ -58,9 +59,9 @@ function ProjectPost({ projects }: Props) {
             <AiOutlineProject className="text-[40px] text-green-400" />
             <p className="flex items-center gap-1 flex-col">
               <span className="text-[40px] font-semibold">
-                {projects.length}+
+                {userProjects.length}+
               </span>
-              <p className="font-semibold">projects created</p>
+              <p className="font-semibold">All Users projects </p>
             </p>
           </Link>
           <Link
@@ -69,8 +70,10 @@ function ProjectPost({ projects }: Props) {
           >
             <AiOutlineFundProjectionScreen className="text-[40px] text-green-400" />
             <p className="flex items-center gap-1 flex-col">
-              <span className="text-[40px] font-semibold">5+</span>
-              <p className="font-semibold">projects completed</p>
+              <span className="text-[40px] font-semibold">
+                {projects.length}+
+              </span>
+              <p className="font-semibold">My projects</p>
             </p>
           </Link>
           <Link
@@ -80,7 +83,7 @@ function ProjectPost({ projects }: Props) {
             <MdOutlinePending className="text-[40px] text-blue-400" />
             <p className="flex items-center gap-1 flex-col">
               <span className="text-[40px] font-semibold">5+</span>
-              <p className="font-semibold">projects pending</p>
+              <p className="font-semibold">Started Project</p>
             </p>
           </Link>
         </div>
