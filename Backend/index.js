@@ -24,14 +24,17 @@ const connectDb = async () => {
     console.log("Database connected successfully");
   } catch (err) {
     console.error(err);
-    process.exit(1); 
+    process.exit(1);
   }
 };
 
 // Middleware to parse JSON data
 app.use(express.json());
 
+// Serve static files from the 'images' directory
 app.use("/images", express.static(path.join(__dirname, "images")));
+
+// Configure CORS
 app.use(
   cors({
     origin: [
@@ -41,6 +44,8 @@ app.use(
     credentials: true,
   })
 );
+
+// Parse cookies
 app.use(cookieParser());
 
 // Middleware for logging HTTP requests
@@ -53,6 +58,7 @@ app.use(`${api}/projects`, ProjectRouter);
 app.use(`${api}/lists`, ListRouter);
 app.use(`${api}/tasks`, taskRouter);
 
+// Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "images");
@@ -64,7 +70,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Correct the route path and use proper response for file upload
+// Handle file uploads
 app.post(`${api}/upload`, upload.single("file"), (req, res) => {
   res.status(200).json({ message: "Image has been uploaded successfully" });
 });
@@ -72,5 +78,5 @@ app.post(`${api}/upload`, upload.single("file"), (req, res) => {
 // Start the server
 app.listen(port, () => {
   connectDb();
-  console.log("Server has started");
+  console.log("Server has started on port", port);
 });
