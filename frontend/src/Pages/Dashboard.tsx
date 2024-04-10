@@ -20,13 +20,14 @@ const Dashboard: React.FC = () => {
   const [userProjects, setUserProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { filteredList } = useContext(SearchContext);
-const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext)
+  
   const fetchProject = async () => {
     setIsLoading(true);
     try {
       const response = await axios.get<Project[]>(`${url}/api/v1/projects/`);
       setUserProjects(response.data);
-      // console.log(response.data);
+      console.log(response.data);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -43,7 +44,7 @@ const {user} = useContext(UserContext)
        `${url}/api/v1/projects/user/${user?._id}`
      );
      setProjects(response.data);
-    //  console.log(response.data);
+     console.log(response.data);
        setIsLoading(false);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -71,7 +72,9 @@ const {user} = useContext(UserContext)
         </div>
       ) : (
         <div className="lg:h-screen">
-          <ProjectPost projects={projects} userProjects={userProjects} />
+            <ProjectPost projects={projects}
+              userProjects={userProjects}
+            />
         </div>
       )}
     </div>

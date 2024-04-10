@@ -18,9 +18,9 @@ function ProjectPost({ projects, userProjects }: Props) {
 
   return (
     <div className="py-10 flex flex-col lg:flex-row gap-3">
-      {projects.length !== 0 ? (
+      {userProjects.length !== 0 ? (
         <div className="flex flex-col gap-3 md:w-[55%]">
-          {projects.map((project, index) => (
+          {userProjects.map((project, index) => (
             <Link
               key={index}
               to={user ? `/projects/project/${project._id}` : "/login"}
