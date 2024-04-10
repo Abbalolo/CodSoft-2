@@ -1,4 +1,4 @@
-import { MdOutlineDelete } from "react-icons/md";
+// import { MdOutlineDelete } from "react-icons/md";
 import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { url } from "../../ApiUrl";
@@ -82,10 +82,10 @@ window.location.reload()
     }
   };
 
-  const removeUser = (id: number) => {
-    const updatedUsers = selectedUsers.filter((user, index) => index !== id);
-    setSelectedUsers(updatedUsers);
-  };
+  // const removeUser = (id: number) => {
+  //   const updatedUsers = selectedUsers.filter((user, index) => index !== id);
+  //   setSelectedUsers(updatedUsers);
+  // };
 
   useEffect(() => {
     validate();
@@ -160,7 +160,7 @@ window.location.reload()
 
         <div className="flex flex-col">
           <div className="flex flex-wrap gap-2">
-           {selectedUsers.map((select, index) => (
+           {selectedUsers.map((select) => (
               <div
                 key={select._id}
                 className="border text-white flex items-center p-2 gap-3 rounded-sm"
@@ -170,11 +170,11 @@ window.location.reload()
                   ).toString(16)}`,
                 }}
               >
-                <p className="">{select.username}</p>
+                {/* <p className="">{select.username}</p>
                 <MdOutlineDelete
                   onClick={() => removeUser(index)}
                   className="mr-1 cursor-pointer"
-                />
+                /> */}
               </div>
             ))} 
           </div>
