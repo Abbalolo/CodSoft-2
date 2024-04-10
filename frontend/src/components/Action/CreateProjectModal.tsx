@@ -52,7 +52,7 @@ const {user} = useContext(UserContext)
 
 
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[80%] rounded-md shadow-md p-5 border">
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[80%] md:w-[40%] rounded-md shadow-md p-5 border">
       <h2 className="text-center font-semibold">Add New Project</h2>
 
       <form onSubmit={handleForm} className="mt-4">

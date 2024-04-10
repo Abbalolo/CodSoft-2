@@ -1,4 +1,4 @@
-// import { MdOutlineDelete } from "react-icons/md";
+import { MdOutlineDelete } from "react-icons/md";
 import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { url } from "../../ApiUrl";
@@ -57,7 +57,7 @@ function CreateTaskModal({ setNewTask, projectId, listId }: Props) {
       endDate,
       priority,
       status,
-      assignedTo: selectedUsers.map((user) => user._id),
+      assignedTo: selectedUsers.map((user) => user?._id)
     };
     console.log(newTask);
     try {
@@ -82,10 +82,10 @@ window.location.reload()
     }
   };
 
-  // const removeUser = (id: number) => {
-  //   const updatedUsers = selectedUsers.filter((user, index) => index !== id);
-  //   setSelectedUsers(updatedUsers);
-  // };
+  const removeUser = (id: number) => {
+    const updatedUsers = selectedUsers.filter((user, index) => index !== id);
+    setSelectedUsers(updatedUsers);
+  };
 
   useEffect(() => {
     validate();
@@ -96,7 +96,7 @@ window.location.reload()
   }, []);
 
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[80%] rounded-md shadow-md p-5 border">
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[80%] md:w-[40%] rounded-md shadow-md p-3 border">
       <h2 className="text-center font-semibold">Add Task</h2>
 
       <form onSubmit={handleForm} className="mt-4 flex flex-col gap-3">
@@ -160,7 +160,7 @@ window.location.reload()
 
         <div className="flex flex-col">
           <div className="flex flex-wrap gap-2">
-           {selectedUsers.map((select) => (
+           {selectedUsers.map((select, index) => (
               <div
                 key={select._id}
                 className="border text-white flex items-center p-2 gap-3 rounded-sm"
@@ -170,11 +170,11 @@ window.location.reload()
                   ).toString(16)}`,
                 }}
               >
-                {/* <p className="">{select.username}</p>
+                <p className="">{select.username}</p>
                 <MdOutlineDelete
                   onClick={() => removeUser(index)}
                   className="mr-1 cursor-pointer"
-                /> */}
+                />
               </div>
             ))} 
           </div>

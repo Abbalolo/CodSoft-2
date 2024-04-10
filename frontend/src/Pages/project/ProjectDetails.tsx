@@ -141,54 +141,56 @@ console.log(taskArr)
       >
         <BiPlus className="text-lg" /> Add List
       </button>
-      {listArr?.map((list) => (
-        <div className="mt-4" key={list._id}>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleListSubmit(list._id);
-            }}
-            className="bg-black flex items-center px-2 shadow-md rounded-md"
-            style={{ borderTop: `5px solid ${list.color}` }}
-          >
-            <input
-              type="text"
-              className="text-white w-full bg-black rounded-sm focus-within:border-black p-2 outline-none"
-              placeholder="List name"
-              value={list.name}
-              onChange={(e) => handleChange(e, list._id)}
-              // onBlur={() => handleListSubmit(list._id)}
-            />
-            {user?._id === list.userId && (
-              <div className="flex items-center gap-3">
-                {!taskArr.some((task) => task.listId === list._id) && (
-                  <BiPlus
-                    className="text-lg text-white relative cursor-pointer"
-                    onClick={() => setAddNewTask(true)}
-                  />
-                )}
-
-                <MdOutlineDelete
-                  onClick={() => deleteList(list._id)}
-                  className="text-lg text-white relative cursor-pointer"
-                />
-              </div>
-            )}
-          </form>
-
-          <TaskData taskArr={taskArr} listId={list._id} />
-          {addNewTask && (
-            <>
-              <div className="absolute top-0 left-0 bg-[#00000066] w-full h-screen"></div>
-              <CreateTaskModal
-                setNewTask={setAddNewTask}
-                listId={list._id}
-                projectId={projectId}
+      <div className="md:flex flex-wrap gap-4">
+        {listArr?.map((list) => (
+          <div className="mt-4  " key={list._id}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleListSubmit(list._id);
+              }}
+              className="bg-black flex items-center px-2 shadow-md rounded-md"
+              style={{ borderTop: `5px solid ${list.color}` }}
+            >
+              <input
+                type="text"
+                className="text-white w-full bg-black rounded-sm focus-within:border-black p-2 outline-none"
+                placeholder="List name"
+                value={list.name}
+                onChange={(e) => handleChange(e, list._id)}
+                // onBlur={() => handleListSubmit(list._id)}
               />
-            </>
-          )}
-        </div>
-      ))}
+              {user?._id === list.userId && (
+                <div className="flex items-center gap-3">
+                  {!taskArr.some((task) => task.listId === list._id) && (
+                    <BiPlus
+                      className="text-lg text-white relative cursor-pointer"
+                      onClick={() => setAddNewTask(true)}
+                    />
+                  )}
+
+                  <MdOutlineDelete
+                    onClick={() => deleteList(list._id)}
+                    className="text-lg text-white relative cursor-pointer"
+                  />
+                </div>
+              )}
+            </form>
+
+            <TaskData taskArr={taskArr} listId={list._id} />
+            {addNewTask && (
+              <>
+                <div className="absolute top-0 left-0 bg-[#00000066] w-full h-screen"></div>
+                <CreateTaskModal
+                  setNewTask={setAddNewTask}
+                  listId={list._id}
+                  projectId={projectId}
+                />
+              </>
+            )}
+          </div>
+        ))}
+      </div>
       {lists.map((list) => (
         <div className="mt-4">
           <form

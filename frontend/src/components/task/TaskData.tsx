@@ -11,7 +11,7 @@ interface Props {
 
 function TaskData({ taskArr, listId }: Props) {
   const [updatedTask, setUpdatedTask] = useState<boolean>(false);
-
+console.log(taskArr)
   return (
     <>
       {taskArr.map(
@@ -32,6 +32,11 @@ function TaskData({ taskArr, listId }: Props) {
                     className="cursor-pointer"
                   />
                 </div>
+                {/* <div className="">
+                  {task.assignTo.map((assign, index) => (
+                    <span key={index}>{assign}</span>
+                  ))}
+                </div> */}
                 <div className="p-3 flex flex-col gap-3">
                   <p className="text-wrap break-word max-w-full">
                     {task.description}
@@ -64,7 +69,7 @@ function TaskData({ taskArr, listId }: Props) {
                     {task.status}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-sm font-semibold">
+                <div className="flex items-center justify-between text-sm lg:gap-5 font-semibold">
                   <p>
                     Start date:{" "}
                     {new Date(task.startDate).toString().slice(0, 15)}
