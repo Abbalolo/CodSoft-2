@@ -57,7 +57,7 @@ function NavBar() {
         <div className={user ? " items-center hidden md:flex": " items-center  flex"}>
           {user ? (
             <h3>
-              <span
+              {(param === "/dashboard") &&  <span
                 onClick={() => {
                   setToggle(false);
                   setToggleCreate(true);
@@ -65,7 +65,8 @@ function NavBar() {
                 className="bg-black text-sm cursor-pointer text-white py-2 px-3 rounded-md shadow-md"
               >
                 Add project
-              </span>
+              </span>}
+             
             </h3>
           ) : (
             
@@ -81,7 +82,7 @@ function NavBar() {
             </div>
           )}
         </div>
-        <div className="relative flex items-center gap-3 md:hidden" ref={menuRef}>
+        <div className="relative flex items-center gap-3 " ref={menuRef}>
    
            <button className="" onClick={() => setToggle(!toggle)}>
            <AiOutlineMenu className="text-[20px]" />
