@@ -89,7 +89,7 @@ function UpdateTask({ setUpdatedTask, taskId }: Props) {
   };
 
   const removeUser = (id: number) => {
-    const updatedUsers = selectedUsers.filter((user, index) => index !== id);
+    const updatedUsers = selectedUsers.filter((_, index) => index !== id);
     setSelectedUsers(updatedUsers);
   };
 
