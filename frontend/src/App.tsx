@@ -10,6 +10,7 @@ import { SearchProvider } from "./context/SearchContext";
 import ProjectDetails from "./Pages/project/ProjectDetails";
 import MyProjects from "./Pages/project/MyProjects";
 import Profile from "./Pages/user/Profile";
+import Home from "./Pages/Home";
 
 
 
@@ -21,13 +22,15 @@ function App() {
         <BrowserRouter>
           <NavBar />
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             {/*  */}
             <Route path="/projects/project/:projectId" element={<ProjectDetails />} />
             <Route path="/my-project" element={<MyProjects />} />
             <Route path="/profile/:userId" element={<Profile />} />
+            
           </Routes>
           <Footer />
         </BrowserRouter>

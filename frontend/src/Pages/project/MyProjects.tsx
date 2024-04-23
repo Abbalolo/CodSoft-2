@@ -52,7 +52,7 @@ function MyProjects() {
         const response = await axios.delete(`${url}/api/v1/projects/${proId}`);
         console.log(response.data)
         fetchProject();
-        navigate("/");
+        navigate("/dashboard");
     } catch (error) {
       console.error("Error fetching projects:", error);
 

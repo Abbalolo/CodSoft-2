@@ -39,7 +39,7 @@ function Login() {
       setUser(res.data);
       setIsLoading(false);
       setError(false);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       setIsLoading(false);
       setError(true);
@@ -53,7 +53,7 @@ function Login() {
   };
 
   return (
-    <main className="h-[85vh] flex justify-center items-center w-full flex-col px-6">
+    <main className="flex justify-center items-center w-full flex-col px-6">
       <h2 className="text-lg md:text-xl font-bold text-center">Login</h2>
       {isLoading && <Loader />}
       <form

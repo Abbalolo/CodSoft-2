@@ -134,7 +134,7 @@ console.log(taskArr)
 
 
   return (
-    <div className="px-6 py-5 ">
+    <div className={lists.length < 2 ? "px-6 py-5 h-screen" : "px-6 py-5 "}>
       <button
         onClick={addNewList}
         className="bg-black w-[100px] flex items-center gap-1  justify-center p-2 text-sm  rounded-md mt-4 text-white shadow-md hover:bg-slate-800 "
@@ -192,7 +192,7 @@ console.log(taskArr)
         ))}
       </div>
       {lists.map((list) => (
-        <div className="mt-4">
+        <div className="mt-4 md:w-[30%] lg:w-[20%]">
           <form
             onSubmit={(e) => {
               e.preventDefault();

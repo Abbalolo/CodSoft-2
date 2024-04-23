@@ -1,4 +1,5 @@
 import { AiOutlineMenu } from "react-icons/ai"; 
+import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect, useRef } from "react";
 import Menu from "./Menu";
@@ -15,6 +16,8 @@ function NavBar() {
   const param = useLocation().pathname;
   const menuRef = useRef<HTMLDivElement>(null);
   const [toggleCreate, setToggleCreate] = useState<boolean>(false)
+
+
 
   const handleLogOut = async () => {
     try {
@@ -44,13 +47,14 @@ function NavBar() {
   }, []);
 
   return (
-    <div className="flex justify-between items-center px-8 md:px-[50px] py-5">
-      <Link to="/" className="font-extrabold lg:text-xl text-base">
-        <span className="text-red-400">CodSoft</span> Manage
+    <div className="flex justify-between items-center px-6 md:px-[50px] py-5">
+      <Link to="/" className="font-bold lg:text-xl text-base flex items-center flex-row">
+        <div className="text-blue-600 ">CodSoft</div><span>Manage</span> <div className="">.</div>
       </Link>
-      {param === "/" && <SearchBar />}
+      {(param === "/dashboard") && <SearchBar />}
+
       <div className="md:flex justify-center items-center gap-3  ">
-        <div className=" items-center  hidden md:flex">
+        <div className={user ? " items-center hidden md:flex": " items-center  flex"}>
           {user ? (
             <h3>
               <span
@@ -58,7 +62,7 @@ function NavBar() {
                   setToggle(false);
                   setToggleCreate(true);
                 }}
-                className="bg-black text-white py-2 px-3 rounded-md shadow-md"
+                className="bg-black text-sm cursor-pointer text-white py-2 px-3 rounded-md shadow-md"
               >
                 Add project
               </span>
@@ -66,19 +70,23 @@ function NavBar() {
           ) : (
             <div className="flex items-center gap-3">
               <h3 className="">
-                <Link to="/login">Login</Link>
+                <Link to="/login"> <Button className=" text-blue-600 border-blue-600 border" variant={"outline"}>Sign in </Button> </Link>
               </h3>
               <h3 className="">
-                <Link to="/register">Register</Link>
+                <Link to="/register">
+                 <Button className=" bg-blue-600">Try Now</Button> 
+                  </Link>
               </h3>
             </div>
           )}
         </div>
         <div className="relative flex items-center gap-3" ref={menuRef}>
-        
-          <button className="" onClick={() => setToggle(!toggle)}>
-            <AiOutlineMenu className="text-[20px]" />
-          </button>
+        {user && (
+           <button className="" onClick={() => setToggle(!toggle)}>
+           <AiOutlineMenu className="text-[20px]" />
+         </button>
+        )}
+         
           {toggle ? (
             <Menu
               handleLogOut={handleLogOut}

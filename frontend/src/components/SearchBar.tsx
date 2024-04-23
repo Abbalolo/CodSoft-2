@@ -14,7 +14,7 @@ const SearchBar: React.FC = () => {
       console.log(filteredList)
    
     } else {
-      navigate("/");
+      navigate("/dashboard");
     }
   };
 

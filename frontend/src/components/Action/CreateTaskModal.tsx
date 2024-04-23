@@ -96,7 +96,7 @@ window.location.reload()
   }, []);
 
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[80%] md:w-[40%] rounded-md shadow-md p-3 border">
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[100%]  h-full md:h-[90vh]  md:w-[40%] md:rounded-md shadow-md p-3 border ">
       <h2 className="text-center font-semibold">Add Task</h2>
 
       <form onSubmit={handleForm} className="mt-4 flex flex-col gap-3">
@@ -209,12 +209,10 @@ window.location.reload()
             required
           />
         </div>
-
-        <button className="bg-black w-20 p-2 rounded-md mt-4 text-white shadow-md hover:bg-slate-800">
+        <div className="flex items-center justify-between mt-2">
+        <button className="bg-black w-20 p-2 rounded-md text-white shadow-md hover:bg-slate-800">
           Submit
         </button>
-      </form>
-      <div className="flex items-end justify-end mt-2">
         <button
           onClick={() => setNewTask(false)}
           className="bg-black w-20 p-2 rounded-md text-white shadow-md hover:bg-slate-800 "
@@ -222,6 +220,9 @@ window.location.reload()
           Close
         </button>
       </div>
+       
+      </form>
+      
     </div>
   );
 }

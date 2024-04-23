@@ -72,7 +72,7 @@ function Register() {
   };
 
   return (
-    <main className="h-[85vh] flex justify-center items-center w-full flex-col px-6">
+    <main className="flex justify-center items-center w-full flex-col px-6">
       <h2 className="text-lg md:text-xl font-bold text-center">Register</h2>
       {isLoading && <Loader />}
       <form

@@ -32,7 +32,7 @@ const {user} = useContext(UserContext)
       console.log(res.data)
       setToggleCreate(false)
     window.location.reload()
-      navigate("/")
+      navigate("/dashboard")
     } catch (error) {
       console.log(error)
     }

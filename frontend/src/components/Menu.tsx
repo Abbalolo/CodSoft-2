@@ -26,7 +26,7 @@ const Menu: React.FC<MenuProps> = ({ handleLogOut, closeMenu ,setToggleCreate}) 
               onClick={handleClick}
               className="hover:bg-slate-100 p-2 text-sm"
             >
-              <Link to="/">Dashboard</Link>
+              <Link to="/dashboard">Dashboard</Link>
             </h3>
             <h3
               onClick={handleClick}
