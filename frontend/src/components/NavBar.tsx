@@ -105,7 +105,7 @@ function NavBar() {
         </div>
       ) : null}
     </div>
-  );
+  )
 }
 
 export default NavBar;
