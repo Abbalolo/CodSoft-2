@@ -68,7 +68,8 @@ function NavBar() {
               </span>
             </h3>
           ) : (
-            <div className="flex items-center gap-3">
+            
+            <div className="hidden items-center gap-3 md:flex">
               <h3 className="">
                 <Link to="/login"> <Button className=" text-blue-600 border-blue-600 border" variant={"outline"}>Sign in </Button> </Link>
               </h3>
@@ -80,12 +81,12 @@ function NavBar() {
             </div>
           )}
         </div>
-        <div className="relative flex items-center gap-3" ref={menuRef}>
-        {user && (
+        <div className="relative flex items-center gap-3 md:hidden" ref={menuRef}>
+   
            <button className="" onClick={() => setToggle(!toggle)}>
            <AiOutlineMenu className="text-[20px]" />
          </button>
-        )}
+       
          
           {toggle ? (
             <Menu
