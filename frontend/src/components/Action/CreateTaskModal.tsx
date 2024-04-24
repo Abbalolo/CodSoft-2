@@ -2,6 +2,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 import { url } from "../../ApiUrl";
+import { Button } from "@/components/ui/button"
 
 interface Props {
   setNewTask: (value: boolean) => void;
@@ -96,10 +97,10 @@ window.location.reload()
   }, []);
 
   return (
-    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[100%]  h-full md:h-[90vh]  md:w-[40%] md:rounded-md shadow-md p-3 border ">
-      <h2 className="text-center font-semibold">Add Task</h2>
+    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white w-[100%]  h-full md:h-[95vh]  md:w-[40%] md:rounded-md shadow-md p-3 border ">
+      <h2 className="text-center font-semibold pb-4">Add Task</h2>
 
-      <form onSubmit={handleForm} className="mt-4 flex flex-col gap-3">
+      <form onSubmit={handleForm} className=" flex flex-col gap-3">
         <div className="">
           <input
             className="border w-full rounded-md outline-none shadow-sm p-3 focus:border-black"
@@ -210,15 +211,16 @@ window.location.reload()
           />
         </div>
         <div className="flex items-center justify-between mt-2">
-        <button className="bg-black w-20 p-2 rounded-md text-white shadow-md hover:bg-slate-800">
+        <Button className="bg-black w-20 p-2 rounded-md text-white shadow-md hover:bg-slate-800">
           Submit
-        </button>
-        <button
+        </Button>
+        <Button
+        variant="destructive"
           onClick={() => setNewTask(false)}
-          className="bg-black w-20 p-2 rounded-md text-white shadow-md hover:bg-slate-800 "
+          className=" w-20 p-2 rounded-md text-white shadow-md hover:bg-slate-800 "
         >
           Close
-        </button>
+        </Button>
       </div>
        
       </form>

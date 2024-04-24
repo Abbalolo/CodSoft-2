@@ -32,8 +32,8 @@ function ProjectDetails() {
   const { projectId } = useParams();
   const [taskArr, setTaskArr] = useState<Task[]>([])
   const [addNewTask, setAddNewTask] = useState<boolean>(false); 
+  const [toggleDelete, setToggleDelete] = useState<boolean>(false); 
 
-console.log(taskArr)
   const fetchList = async () => {
     try {
       const res = await axios.get(`${url}/api/v1/lists/project/${projectId}`);
@@ -48,7 +48,7 @@ console.log(taskArr)
       const res = await axios.get<Task[]>(
         `${url}/api/v1/tasks/project/${projectId}`
       );
-      console.log(res.data);
+      // console.log(res.data);
       setTaskArr(res.data)
     } catch (error) {
       console.log(error);
@@ -56,10 +56,16 @@ console.log(taskArr)
   };
 
   const deleteList = async (id: any) => {
+
+    setToggleDelete(true)
+
     try {
-      const res = await axios.delete(`${url}/api/v1/lists/${id}`);
+
+   await axios.delete(`${url}/api/v1/lists/${id}`);
+        setToggleDelete(false)
+  
       fetchList();
-     console.log(res)
+   
     } catch (error) {
       console.log(error);
     }
@@ -168,11 +174,17 @@ console.log(taskArr)
                       onClick={() => setAddNewTask(true)}
                     />
                   )}
-
-                  <MdOutlineDelete
+                  
+                  <div className="flex items-center gap-2">
+                  {toggleDelete ? <div className="button-loader"></div> :  <MdOutlineDelete
                     onClick={() => deleteList(list._id)}
                     className="text-lg text-white relative cursor-pointer"
-                  />
+                  />}
+                 
+
+                </div>
+
+                  
                 </div>
               )}
             </form>

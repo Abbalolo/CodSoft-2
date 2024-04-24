@@ -19,7 +19,7 @@ const Dashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [userProjects, setUserProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { filteredList } = useContext(SearchContext);
+  const { filteredProjects } = useContext(SearchContext);
   const { user } = useContext(UserContext)
   
   const fetchProject = async () => {
@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
     try {
       const response = await axios.get<Project[]>(`${url}/api/v1/projects/`);
       setUserProjects(response.data);
-      console.log(response.data);
+      // console.log(response.data);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
        `${url}/api/v1/projects/user/${user?._id}`
      );
      setProjects(response.data);
-     console.log(response.data);
+    //  console.log(response.data);
        setIsLoading(false);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -60,9 +60,9 @@ const Dashboard: React.FC = () => {
     fetchProject();
   }, []);
 
-  useEffect(() => {
-    setUserProjects(filteredList);
-  }, [filteredList]);
+  // useEffect(() => {
+  //   setUserProjects();
+  // }, [filteredProjects]);
 
   return (
     <div className="px-6 md:px-[100px]  ">

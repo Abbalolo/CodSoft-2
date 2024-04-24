@@ -1,7 +1,7 @@
 import { TbTrashFilled } from "react-icons/tb"; 
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import { MdOutlinePending } from "react-icons/md";
 // import {
 //   AiOutlineFundProjectionScreen,
@@ -18,15 +18,14 @@ export interface Project {
   username: string;
   updatedAt: string;
   userId: string;
-    color: string;
+  color: string;
 }
 
 function MyProjects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-    const { user } = useContext(UserContext);
-    const navigate = useNavigate();
-
+  const { user } = useContext(UserContext);
+  const [toggleDelete, setToggleDelete] = useState<boolean>(false); 
 
   const fetchProject = async () => {
     setIsLoading(true);
@@ -35,29 +34,27 @@ function MyProjects() {
         `${url}/api/v1/projects/user/${user?._id}`
       );
       setProjects(response.data);
-      console.log(response.data)
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching projects:", error);
       setIsLoading(false);
-    }
-    };
-      useEffect(() => {
-        fetchProject();
-      }, []);
-
-  const deleteProject = async (proId: any) => {
-
-    try {
-        const response = await axios.delete(`${url}/api/v1/projects/${proId}`);
-        console.log(response.data)
-        fetchProject();
-        navigate("/dashboard");
-    } catch (error) {
-      console.error("Error fetching projects:", error);
-
     }
   };
+    
+  const deleteProject = async (proId: any) => {
+    setToggleDelete(true);
+    try {
+      await axios.delete(`${url}/api/v1/projects/${proId}`);
+      setToggleDelete(false);
+      fetchProject();
+    } catch (error) {
+      console.error("Error deleting project:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProject();
+  }, []);
 
   return (
     <div className="py-10 flex flex-col lg:flex-row gap-3 px-6 h-screen">
@@ -86,9 +83,9 @@ function MyProjects() {
             </Link>
             <button
               onClick={() => deleteProject(project._id)}
-              className="hover:bg-red-400 hover:text-white h-full px-3   border transition-all duration-500"
+              className="hover:bg-red-400 hover:text-white h-full px-3 border transition-all duration-500 flex items-center"
             >
-              <TbTrashFilled />
+              {toggleDelete ?  <div className="button-loader2"></div>:  <TbTrashFilled />}
             </button>
           </div>
         ))
@@ -100,6 +97,7 @@ function MyProjects() {
         </div>
       )}
 
+      {/* Project statistics section */}
       {/* <div className="border md:w-[45%] h-full">
         <div className="flex flex-col lg:flex-row gap-10 md:gap-0 lg:divide-x divide-y">
           <Link

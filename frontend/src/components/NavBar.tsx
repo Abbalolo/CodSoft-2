@@ -1,4 +1,4 @@
-import { AiOutlineMenu } from "react-icons/ai"; 
+import { AiOutlineMenu } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect, useRef } from "react";
@@ -8,6 +8,7 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { url } from "../ApiUrl";
 import CreateProjectModal from "./Action/CreateProjectModal";
+import { SearchContext } from "@/context/SearchContext";
 
 function NavBar() {
   const [toggle, setToggle] = useState(false);
@@ -16,8 +17,8 @@ function NavBar() {
   const param = useLocation().pathname;
   const menuRef = useRef<HTMLDivElement>(null);
   const [toggleCreate, setToggleCreate] = useState<boolean>(false)
-
-
+  const {filteredProjects, filteredTasks, filteredLists } = useContext(SearchContext);
+  console.log({filteredProjects, filteredTasks, filteredLists })
 
   const handleLogOut = async () => {
     try {
@@ -51,7 +52,12 @@ function NavBar() {
       <Link to="/" className="font-bold lg:text-xl text-base flex items-center flex-row">
         <div className="text-blue-600 ">CodSoft</div><span>Manage</span> <div className="">.</div>
       </Link>
-      {(param === "/dashboard") && <SearchBar />}
+      {(param === "/dashboard") && 
+      <>
+      
+      <SearchBar />
+      </>
+      }
 
       <div className="md:flex justify-center items-center gap-3  ">
         <div className={user ? " items-center hidden md:flex": " items-center  flex"}>
@@ -69,7 +75,6 @@ function NavBar() {
              
             </h3>
           ) : (
-            
             <div className="hidden items-center gap-3 md:flex">
               <h3 className="">
                 <Link to="/login"> <Button className=" text-blue-600 border-blue-600 border" variant={"outline"}>Sign in </Button> </Link>
@@ -82,22 +87,32 @@ function NavBar() {
             </div>
           )}
         </div>
-        <div className="relative flex items-center gap-3 " ref={menuRef}>
-   
-           <button className="" onClick={() => setToggle(!toggle)}>
-           <AiOutlineMenu className="text-[20px]" />
-         </button>
+
        
-         
-          {toggle ? (
-            <Menu
-              handleLogOut={handleLogOut}
-              setToggleCreate={setToggleCreate}
-              closeMenu={closeMenu}
-            />
-          ) : null}
-        </div>
+        {!user ? (
+          <div className="relative flex items-center gap-3 md:hidden" ref={menuRef}>
+            <button className="" onClick={() => setToggle(!toggle)}>
+              <AiOutlineMenu className="text-[20px]" />
+            </button>
+          </div>
+        ) : (
+          <div className="relative flex items-center gap-3 " ref={menuRef}>
+            <button className="" onClick={() => setToggle(!toggle)}>
+              <AiOutlineMenu className="text-[20px]" />
+            </button>
+          </div>
+        )}
+
+        {toggle ? (
+          <Menu
+            handleLogOut={handleLogOut}
+            setToggleCreate={setToggleCreate}
+            closeMenu={closeMenu}
+          />
+        ) : null}
       </div>
+
+      {param.includes(`/projects/project/`) && (<div>lolo</div>) }
 
       {toggleCreate ? (
         <div>
@@ -106,7 +121,7 @@ function NavBar() {
         </div>
       ) : null}
     </div>
-  )
+  );
 }
 
 export default NavBar;

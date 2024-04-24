@@ -3,7 +3,7 @@ import { FormEvent, useContext, useEffect, useState } from "react";
 import { url } from "../../ApiUrl";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
-
+import { Button } from "@/components/ui/button"
 
 
 interface CreateProjectModalProps {
@@ -31,7 +31,7 @@ const {user} = useContext(UserContext)
      });
       console.log(res.data)
       setToggleCreate(false)
-    window.location.reload()
+    // window.location.reload()
       navigate("/dashboard")
     } catch (error) {
       console.log(error)
@@ -73,18 +73,20 @@ const {user} = useContext(UserContext)
             ""
           )}
         </div>
-        <button className="bg-black w-20 p-2 rounded-md mt-4 text-white shadow-md hover:bg-slate-800">
+        <div className="flex items-center justify-between">
+        <Button className="bg-black w-20 p-2 rounded-md mt-4 text-white shadow-md hover:bg-slate-800">
           Submit
-        </button>
-      </form>
-      <div className="flex items-end justify-end mt-3">
-        <button
+        </Button>
+        <Button
+        variant="destructive"
           onClick={() => setToggleCreate(false)}
-          className="bg-black w-20 p-2  rounded-md mt-4 text-white shadow-md hover:bg-slate-800 "
+          className=" w-20 p-2  rounded-md mt-4 text-white shadow-md hover:bg-slate-800 "
         >
           close
-        </button>
+        </Button>
       </div>
+      </form>
+     
     </div>
   );
 }
