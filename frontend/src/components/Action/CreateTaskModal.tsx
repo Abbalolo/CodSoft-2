@@ -10,7 +10,7 @@ interface Props {
   listId: number;
 }
 
-interface User {
+export interface User {
   _id: string;
   username: string;
 }

@@ -8,17 +8,18 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { url } from "../ApiUrl";
 import CreateProjectModal from "./Action/CreateProjectModal";
-import { SearchContext } from "@/context/SearchContext";
+
 
 function NavBar() {
   const [toggle, setToggle] = useState(false);
   const { user, setUser } = useContext(UserContext);
+
   const navigate = useNavigate();
   const param = useLocation().pathname;
   const menuRef = useRef<HTMLDivElement>(null);
-  const [toggleCreate, setToggleCreate] = useState<boolean>(false)
-  const {filteredProjects, filteredTasks, filteredLists } = useContext(SearchContext);
-  console.log({filteredProjects, filteredTasks, filteredLists })
+  const [toggleCreate, setToggleCreate] = useState<boolean>(false);
+ 
+
 
   const handleLogOut = async () => {
     try {
@@ -31,7 +32,7 @@ function NavBar() {
   };
 
   const closeMenu = () => {
-    setToggle(false); 
+    setToggle(false);
   };
 
   useEffect(() => {
@@ -49,48 +50,77 @@ function NavBar() {
 
   return (
     <div className="flex justify-between items-center px-6 md:px-[50px] py-5">
-      <Link to="/" className="font-bold lg:text-xl text-base flex items-center flex-row">
-        <div className="text-blue-600 ">CodSoft</div><span>Manage</span> <div className="">.</div>
+      <Link
+        to="/"
+        className="font-bold lg:text-xl text-base flex items-center flex-row"
+      >
+        <div className="text-blue-600 ">CodSoft</div>
+        <span>Manage</span> <div className="">.</div>
       </Link>
-      {(param === "/dashboard") && 
-      <>
-      
-      <SearchBar />
-      </>
-      }
+<div className="md:w-[60%] hidden md:block">
+          {(param === "/dashboard" || param.includes(`/projects/project/`)) && (
+        
+
+        <SearchBar />
+        
+      )}
+         </div>
 
       <div className="md:flex justify-center items-center gap-3  ">
-        <div className={user ? " items-center hidden md:flex": " items-center  flex"}>
+        <div
+          className={
+            user ? " items-center hidden md:flex" : " items-center  flex"
+          }
+        >
           {user ? (
             <h3>
-              {(param === "/dashboard") &&  <span
-                onClick={() => {
-                  setToggle(false);
-                  setToggleCreate(true);
-                }}
-                className="bg-black text-sm cursor-pointer text-white py-2 px-3 rounded-md shadow-md"
-              >
-                Add project
-              </span>}
-             
+              {param === "/dashboard" && (
+                <span
+                  onClick={() => {
+                    setToggle(false);
+                    setToggleCreate(true);
+                  }}
+                  className="bg-black text-sm cursor-pointer text-white py-2 px-3 rounded-md shadow-md"
+                >
+                  Add project
+                </span>
+              )}
             </h3>
           ) : (
             <div className="hidden items-center gap-3 md:flex">
               <h3 className="">
-                <Link to="/login"> <Button className=" text-blue-600 border-blue-600 border" variant={"outline"}>Sign in </Button> </Link>
+                <Link to="/login">
+                  {" "}
+                  <Button
+                    className=" text-blue-600 border-blue-600 border"
+                    variant={"outline"}
+                  >
+                    Sign in{" "}
+                  </Button>{" "}
+                </Link>
               </h3>
               <h3 className="">
                 <Link to="/register">
-                 <Button className=" bg-blue-600">Try Now</Button> 
-                  </Link>
+                  <Button className=" bg-blue-600">Try Now</Button>
+                </Link>
               </h3>
             </div>
           )}
         </div>
 
+        <div className="flex items-center gap-5">
+          <div className="md:hidden">
+          {(param === "/dashboard" || param.includes(`/projects/project/`)) && (
+        <SearchBar />
+      )}
+          </div>
        
-        {!user ? (
-          <div className="relative flex items-center gap-3 md:hidden" ref={menuRef}>
+
+{!user ? (
+          <div
+            className="relative flex items-center gap-3 md:hidden"
+            ref={menuRef}
+          >
             <button className="" onClick={() => setToggle(!toggle)}>
               <AiOutlineMenu className="text-[20px]" />
             </button>
@@ -102,6 +132,9 @@ function NavBar() {
             </button>
           </div>
         )}
+        </div>
+
+
 
         {toggle ? (
           <Menu
@@ -111,8 +144,6 @@ function NavBar() {
           />
         ) : null}
       </div>
-
-      {param.includes(`/projects/project/`) && (<div>lolo</div>) }
 
       {toggleCreate ? (
         <div>

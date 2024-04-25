@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { url } from "../ApiUrl";
-import { SearchContext } from "../context/SearchContext";
+
 import ContentLoader from "../components/ContentLoader";
 import ProjectPost from "../components/ProjectPost";
 import { UserContext } from "../context/UserContext";
@@ -19,7 +19,7 @@ const Dashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [userProjects, setUserProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { filteredProjects } = useContext(SearchContext);
+ 
   const { user } = useContext(UserContext)
   
   const fetchProject = async () => {

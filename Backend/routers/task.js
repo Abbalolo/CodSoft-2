@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Task = require("../models/task");
-const User = require("../models/user"); 
+const User = require("../models/user");
 
 // Get all tasks
 router.get("/", async (req, res) => {
@@ -47,11 +47,12 @@ router.post("/create", async (req, res) => {
   try {
     // Check if all assigned users exist
     const usersExist = await Promise.all(
-      assignedTo.map(async (userId) => {
-        const user = await User.findById(userId);
+      assignedTo.map(async (username) => {
+        const user = await User.findOne({ username });
         return user !== null;
       })
     );
+    
 
     if (usersExist.includes(false)) {
       return res
@@ -140,6 +141,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// Get task by ID
 router.get("/:taskId", async (req, res) => {
   const taskId = req.params.taskId;
 

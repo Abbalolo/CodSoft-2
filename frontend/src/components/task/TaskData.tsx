@@ -1,7 +1,9 @@
 import { MdModeEditOutline } from "react-icons/md";
 import { Task } from "../../Pages/project/ProjectDetails";
-import { useState } from "react";
 import UpdateTask from "./UpdateTask";
+
+import {  useState } from "react";
+
 
 interface Props {
   taskArr: Task[];
@@ -9,8 +11,13 @@ interface Props {
 
 }
 
+
+
+
 function TaskData({ taskArr, listId }: Props) {
   const [updatedTask, setUpdatedTask] = useState<boolean>(false);
+ 
+
 console.log(taskArr)
   return (
     <>

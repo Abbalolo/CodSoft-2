@@ -3,6 +3,7 @@ interface CreateListModalProps {
 }
 
 function CreateListModal({ lists }: CreateListModalProps) {
+
   return (
     <>
       <div className="mt-5 flex gap-5 flex-col transition-all duration-300 ease-in-out">

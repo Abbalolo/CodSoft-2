@@ -13,12 +13,11 @@ export interface Task {
   description: string;
   startDate: string;
   endDate: string;
-  assignTo: any[];
+  assignedTo: any[];
   status: string;
   priority: string;
   projectId: string;
   listId: any;
-
 }
 function ProjectDetails() {
   const [lists, setLists] = useState<
@@ -30,10 +29,11 @@ function ProjectDetails() {
   >([]);
   const { user } = useContext(UserContext);
   const { projectId } = useParams();
-  const [taskArr, setTaskArr] = useState<Task[]>([])
-  const [addNewTask, setAddNewTask] = useState<boolean>(false); 
-  const [toggleDelete, setToggleDelete] = useState<boolean>(false); 
+  const [taskArr, setTaskArr] = useState<Task[]>([]);
+  const [addNewTask, setAddNewTask] = useState<boolean>(false);
+  const [toggleDelete, setToggleDelete] = useState<boolean>(false);
 
+  // console.log(listArr)
   const fetchList = async () => {
     try {
       const res = await axios.get(`${url}/api/v1/lists/project/${projectId}`);
@@ -49,34 +49,24 @@ function ProjectDetails() {
         `${url}/api/v1/tasks/project/${projectId}`
       );
       // console.log(res.data);
-      setTaskArr(res.data)
+      setTaskArr(res.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   const deleteList = async (id: any) => {
-
-    setToggleDelete(true)
+    setToggleDelete(true);
 
     try {
+      await axios.delete(`${url}/api/v1/lists/${id}`);
+      setToggleDelete(false);
 
-   await axios.delete(`${url}/api/v1/lists/${id}`);
-        setToggleDelete(false)
-  
       fetchList();
-   
     } catch (error) {
       console.log(error);
     }
   };
-
- 
-
-
-
-
-
 
   const createList = async () => {
     try {
@@ -98,7 +88,7 @@ function ProjectDetails() {
   //   try {
   //     const updatedList = {
   //       name: listName,
-    
+
   //     };
   //     const res = await axios.put(`${url}/api/v1/lists/${listId}`, updatedList, {
   //       withCredentials: true,
@@ -118,11 +108,9 @@ function ProjectDetails() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
     const updatedLists = lists.map((list) =>
       list.id === id ? { ...list, name: e.target.value } : list
-     
     );
     setLists(updatedLists);
     setListName(e.target.value);
-    
   };
 
   const addNewList = () => {
@@ -131,13 +119,10 @@ function ProjectDetails() {
     setLists([...lists, newList]);
   };
 
-   useEffect(() => {
-     fetchList();
-     fetchTasksForList();
-   }, [projectId]);
-
-
-
+  useEffect(() => {
+    fetchList();
+    fetchTasksForList();
+  }, [projectId]);
 
   return (
     <div className={lists.length < 2 ? "px-6 py-5 h-screen" : "px-6 py-5 "}>
@@ -147,6 +132,7 @@ function ProjectDetails() {
       >
         <BiPlus className="text-lg" /> Add List
       </button>
+     
       <div className="md:flex flex-wrap gap-4">
         {listArr?.map((list) => (
           <div className="mt-4  " key={list._id}>
@@ -174,17 +160,17 @@ function ProjectDetails() {
                       onClick={() => setAddNewTask(true)}
                     />
                   )}
-                  
+
                   <div className="flex items-center gap-2">
-                  {toggleDelete ? <div className="button-loader"></div> :  <MdOutlineDelete
-                    onClick={() => deleteList(list._id)}
-                    className="text-lg text-white relative cursor-pointer"
-                  />}
-                 
-
-                </div>
-
-                  
+                    {toggleDelete ? (
+                      <div className="button-loader"></div>
+                    ) : (
+                      <MdOutlineDelete
+                        onClick={() => deleteList(list._id)}
+                        className="text-lg text-white relative cursor-pointer"
+                      />
+                    )}
+                  </div>
                 </div>
               )}
             </form>
@@ -203,6 +189,7 @@ function ProjectDetails() {
           </div>
         ))}
       </div>
+
       {lists.map((list) => (
         <div className="mt-4 md:w-[30%] lg:w-[20%]">
           <form
@@ -223,6 +210,7 @@ function ProjectDetails() {
           </form>
         </div>
       ))}
+
     </div>
   );
 }
